@@ -5,6 +5,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 class AlunniController
 {
   public function index(Request $request, Response $response, $args){
+    sleep(3);
     $mysqli_connection = db::getInstance();
     $result = $mysqli_connection->query("SELECT * FROM alunni");
     $results = $result->fetch_all(MYSQLI_ASSOC);
@@ -44,5 +45,14 @@ class AlunniController
       return $response->withHeader("Content-type", "application/json")->withStatus(200);
     }
       
+  }
+
+  public function destroy(Request $request, Response $response, $args){
+    $mysqli_connection = db::getInstance();
+    $id=$args["id"];
+    $result = $mysqli_connection->query("DELETE FROM alunni WHERE id = '$id';");
+  
+    $response->getBody()->write(json_encode($result));
+    return $response->withHeader("Content-type", "application/json")->withStatus(200);
   }
 }

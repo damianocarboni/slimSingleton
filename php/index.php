@@ -14,5 +14,6 @@ $app->get('/sort/alunni/{col:\w{3,}}', "AlunniController:sort");
 $app->get('/alunni/{id:\d+}/cert', "CertificazioniController:index");
 $app->get('/alunni/{id:\d+}/cert/{id_cert:\d+}', "CertificazioniController:search");
 $app->post('/alunni/{id:\d+}/cert', "CertificazioniController:add");
+$app->delete('/alunni/{id}', "AlunniController:destroy");
 
 $app->run();
