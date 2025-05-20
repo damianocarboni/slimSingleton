@@ -55,4 +55,26 @@ class AlunniController
     $response->getBody()->write(json_encode($result));
     return $response->withHeader("Content-type", "application/json")->withStatus(200);
   }
+
+  public function update(Request $request, Response $response, $args){
+    $body = json_decode($request->getBody()->getContents(),true);
+    $nome = $body["nome"];
+    $cognome = $body["cognome"];
+    $id = $args["id"];
+    $mysqli_connection = db::getInstance();
+    $result = $mysqli_connection->query("UPDATE alunni SET nome = '$nome', cognome = '$cognome' WHERE id = '$id' ;");
+    $response->getBody()->write(json_encode($result));
+    return $response->withHeader("Content-type", "application/json")->withStatus(200);
+  }
+
+  public function create(Request $request, Response $response, $args){
+    $body = json_decode($request->getBody()->getContents(),true);
+    $nome = $body["nome"];
+    $cognome = $body["cognome"];
+
+    $mysqli_connection = new MySQLi('my_mariadb', 'root', 'ciccio', 'scuola');
+    $result = $mysqli_connection->query("INSERT INTO alunni (nome, cognome) VALUES ('$nome', '$cognome')");
+    $response->getBody()->write(json_encode($result));
+    return $response->withHeader("Content-type", "application/json")->withStatus(200);
+}
 }
